@@ -19,6 +19,8 @@ conda activate <env_name>
 pip install -r pip_requirements.txt
 ```
 
+### Datasets
+To get the datasets for the analysis, download from http://www.cs.cmu.edu/~ark/personas/ and https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies. 
 
 
 ### How to use the library
