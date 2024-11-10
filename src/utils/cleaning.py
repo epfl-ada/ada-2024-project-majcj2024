@@ -1,5 +1,8 @@
 import json
 import pandas as pd
+import re
+
+# the following cleaning functions do NOT change the size of the dataframes they are applied to
 
 def clean_idxs(pattern):
     """
@@ -30,3 +33,31 @@ def clean_dates(date):
         return None
     else:
         return int(date[:4])
+
+def clean_titles(title):
+    """
+    clean_titles - cleans a title string to remove ' (yyyy)'.
+
+    Inputs: - title (string): title formatted as 'title (yyy)'
+
+    Outputs: - title (string): title formatted as 'title'
+    """
+    if pd.isna(title):
+        return None
+    else:
+        title = re.sub(r"\s*\(.*\)$", "", title)
+        return title
+
+def clean_imdb(id):
+    """
+    clean_imdb - cleans an IMDB id string to remove 'tt' pattern.
+
+    Inputs: - id (string): IMDB id formatted as 'tt#######'
+
+    Outputs: - id (int): int IMDB id formatted as #######
+    """
+    if pd.isna(id):
+        return None
+    else:
+        id = re.sub('tt', '', id)
+        return int(id)
