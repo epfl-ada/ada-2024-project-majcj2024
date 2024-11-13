@@ -26,7 +26,7 @@ asia = [
     'Jordan', 'Iraqi Kurdistan', 'Republic of China', 'Macau', 'Palestinian Territories'
 ]
 
-australia = [
+oceania = [
     'Australia', 'New Zealand'
 ]
 
