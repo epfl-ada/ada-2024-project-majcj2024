@@ -95,8 +95,7 @@ def drop_most_missing(df, cols):
     # for each element in cols find the row with the least missing values
     df_cleaned = df.loc[df.groupby(cols)['missing_values'].idxmin()]
 
-    # dropping 'missing_values' columns
-    df = df.drop(columns=['missing_values'])
+    # dropping 'missing_values' column
     df_cleaned = df_cleaned.drop(columns=['missing_values'])
     
     return df_cleaned

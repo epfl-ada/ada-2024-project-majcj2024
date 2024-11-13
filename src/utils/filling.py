@@ -25,3 +25,30 @@ def fill_iqr(df, col, t=1.5):
 
     # putting fixed rows into the original dataframe
     return pd.concat([df, outliers], ignore_index=True)
+
+def fill_cluster_col(df, col, col_q, dict):
+    """
+    fill_cluster_col - fills the column col of df based on
+    the values in the query column col_q by choosing values of 
+    a cluster (dict).
+
+    Inputs: - df (dataframe): dataframe whose column needs to be filled
+            - col (string): col to fill
+            - col_q (string): query column
+            - dict (dictionary): contains the clusters (and their names)
+                                wrt which col will be filled
+    
+    Outputs:
+    """
+    # check if col does not exist (and fill with None if True)
+    if col not in df.columns:
+          df[col] = None
+
+    # iterate on col nan entries
+    for index, row in df[df[col].isna()].iterrows():
+        # expand the dictionary
+        for name, list in dict.items():
+                # assing col value when the correct cluster is found
+                if row[col_q] in list:
+                        df.loc[index, col] = name
+                        break
