@@ -3,7 +3,7 @@ import pandas as pd
 def fill_iqr(df, col, t=1.5):
     """
     fill_iqr - replaces a dataframe column outliers with mean of non-outliers, 
-    assuming normality and applying +/- threshold*IQR of quantiles method
+    assuming normality and applying +/- threshold*IQR of quantiles method.
 
     Inputs: - df (dataframe): dataframe whose outliers should be replaced
             - col (string): considered df column
@@ -26,29 +26,23 @@ def fill_iqr(df, col, t=1.5):
     # putting fixed rows into the original dataframe
     return pd.concat([df, outliers], ignore_index=True)
 
-#def fill_cluster_col(df, col, col_q, dict):
+def fill_col1(row, col1, col2, col3, unmatched):
     """
-    fill_cluster_col - fills the column col of df based on
-    the values in the query column col_q by choosing values of 
-    a cluster (dict).
+    fill_col1 - applied to a dataframe column, fills it 
+    based on the presence of the considered feature in the unmatched variable and 
+    on the values of col2, col3.
 
-    Inputs: - df (dataframe): dataframe whose column needs to be filled
-            - col (string): col to fill
-            - col_q (string): query column
-            - dict (dictionary): contains the clusters (and their names)
-                                wrt which col will be filled
-    
+    Inputs: - row (series): dataframe row
+            - col1 (string): column that needs to be filled
+            - col2, col3 (string): columns on which filling is based if col1 is not unmatched
+            - unmatched (list): list of unmatched strings to compare with col1
+
     Outputs:
     """
-    # check if col does not exist (and fill with None if True)
-#    if col not in df.columns:
-#          df[col] = None
-
-    # iterate on col nan entries
-#    for index, row in df[df[col].isna()].iterrows():
-        # expand the dictionary
-#        for name, list in dict.items():
-                # assing col value when the correct cluster is found
-#                if row[col_q] in list:
-#                        df.loc[index, col] = name
-#                        break
+    if row[col1] in unmatched:
+        # skip filling by keeping row[col1] as it is
+        return row[col1]
+    else:
+        # retrieve either col2 or col3 if the first is nan
+        return row[col1] if pd.notna(row[col1]) else (
+            row[col2] if pd.notna(row[col2]) else row[col3])
