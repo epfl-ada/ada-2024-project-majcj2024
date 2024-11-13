@@ -76,3 +76,27 @@ def filter_years(df, col_year, low_b=1888, up_b=2012):
     """
     df_filtered = df[(df[col_year] >= low_b) & (df[col_year] <= up_b)]
     return df_filtered
+
+def drop_most_missing(df, cols):
+    """
+    drop_most_missing - drops rows of a dataframe that contain the most 
+    amount of missing values among features, after grouping by cols. Note that
+    additional cleaning might be required as rows with the same amount of missing 
+    values are kept.
+
+    Inputs: - df (dataframe): dataframe to be cleaned
+            - cols (list): columns on which the groupby operation is conducted
+
+    Outputs: - df_cleaned (dataframe): cleaned dataframe
+    """
+    # count missing values occurances
+    df['missing_values'] = df.isnull().sum(axis=1)
+
+    # for each element in cols find the row with the least missing values
+    df_cleaned = df.loc[df.groupby(cols)['missing_values'].idxmin()]
+
+    # dropping 'missing_values' columns
+    df = df.drop(columns=['missing_values'])
+    df_cleaned = df_cleaned.drop(columns=['missing_values'])
+    
+    return df_cleaned
