@@ -37,6 +37,14 @@ south_america = [
 
 africa = [
     'South Africa', 'Egypt', 'Cambodia', 'Morocco', 'Senegal', 'Burkina Faso', 'Algeria',
-    'Tunisia', 'Burma', 'Nigeria', 'Republic Democratic of the Congo', 'Mali', 'Kenya', 'Cameroon',
+    'Tunisia', 'Burma', 'Nigeria', 'Democratic Republic of the Congo', 'Mali', 'Kenya', 'Cameroon',
     'Ethiopia', 'Zimbabwe', 'Congo', 'Libya', 'Zambia', 'Guinea-Bissau'
 ]
+
+# defining continents dictionary
+continents = {'North America': north_america,
+              'South America': south_america,
+              'Europe': europe,
+              'Asia': asia,
+              'Oceania': oceania,
+              'Africa': africa}
