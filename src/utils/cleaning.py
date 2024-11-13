@@ -61,3 +61,18 @@ def clean_imdb(id):
     else:
         id = re.sub('tt', '', id)
         return int(id)
+    
+def filter_years(df, col_year, low_b=1888, up_b=2012):
+    """
+    filter_years - filter the column col_year of a dataframe 
+    to keep the year interval [low_b, up_b].
+
+    Inputs: - df (dataframe): dataframe to be filtered
+            - col_year (string): columns on which the filtering is done
+            - low_b (int): lower boundary of the years interval
+            - up_b (int): upper boundary of the years interval
+
+    Outputs: - df_filtered (dataframe): filtered dataframe
+    """
+    df_filtered = df[(df[col_year] >= low_b) & (df[col_year] <= up_b)]
+    return df_filtered
