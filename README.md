@@ -1,4 +1,4 @@
-# History’s Plot Twist: Cinematic genre, diversity, and popularity as the ultimate mirror 
+# History’s Plot Twist: Cinematic genre, diversity, and popularity as the ultimate mirror 🪞
 
 ## Abstract  
 In the world of cinema, movies often do more than entertain—they capture and reflect the 
@@ -105,20 +105,25 @@ most predictable.
 ### Part 6: Formatting the final datastory and expanding modular file organization 
 
 ## Proposed timeline 
-- Week 1: Review steps 1-5 + Homework 2 
-- Week 2: Repeat steps 5-7 across genres, region, and/or time periods 
-- Week 3: Step 8 + 9 
-- Week 4: Step 10 + 11 
-- Week 5: Compile final data story, clean repository, and finalize interactive webpage. 
+| **Week** | **Tasks**                                                                         |
+|----------|-----------------------------------------------------------------------------------|
+| Week 1   | Review steps 1-5 + Homework 2                                                    |
+| Week 2   | Repeat steps 5-7 across genres, region, and/or time periods                      |
+| Week 3   | Step 8 + 9                                                                       |
+| Week 4   | Step 10 + 11                                                                     |
+| Week 5   | Compile final data story, clean repository, and finalize interactive webpage.    |
+
 
 ## Organization within the team:  
 Despite the below divisions, we work collaboratively and continuously to ensure we remain up 
 to date on the project happenings and to ensure no one's thinking becomes too pigeonholed. 
-- Week 1: All 
-- Week 2: Jake and Alexis 
-- Week 3: Mariem, Jacopo, Chiara 
-- Week 4: Jake, Jacopo, Chiara, Mariem 
-- Week 5: All  
+| **Week**   | **Participants**                        |
+|------------|-----------------------------------------|
+| Week 1     | All                                     |
+| Week 2     | Jake and Alexis                         |
+| Week 3     | Mariem, Jacopo, Chiara                  |
+| Week 4     | Jake, Jacopo, Chiara, Mariem            |
+| Week 5     | All                                     |
 
 ## Questions for TAs:  
 We’ll be in contact with Ziyi. 
@@ -132,15 +137,8 @@ https://files.grouplens.org/datasets/movielens/ml-25m-README.html
 
 [3] https://query.wikidata.org/ 
 
-
-### Datasets
-To get the datasets for the analysis, download from http://www.cs.cmu.edu/~ark/personas/ and https://www.kaggle.gicom/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies. 
-
-
-
 ## Project Structure
-
-The directory structure of new project looks like this:
+The current directory structure of the project iss the following:
 
 ```
 ├── data                        <- Project data files
@@ -159,3 +157,4 @@ The directory structure of new project looks like this:
 └── README.md
 ```
 
+Note that in `data/` one should upload all required large datafiles (CMU datasets, [1], [2]).
