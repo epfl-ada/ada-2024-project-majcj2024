@@ -104,7 +104,7 @@ most predictable.
 
 ### Part 6: Formatting the final datastory and expanding modular file organization 
 
-## Proposed timeline 
+## Proposed timeline:
 | **Week** | **Tasks**                                                                         |
 |----------|-----------------------------------------------------------------------------------|
 | Week 1   | Review steps 1-5 + Homework 2                                                    |
@@ -149,7 +149,6 @@ The current directory structure of the project iss the following:
 │   ├── utils                           <- Utility directory
 │   ├── scripts                         <- Shell scripts
 │    
-│
 ├── results.ipynb               
 │
 ├── .gitignore                  
