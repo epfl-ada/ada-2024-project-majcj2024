@@ -13,18 +13,18 @@ critics, and enthusiasts alike can better understand cinema’s role as both a r
 influencer of the world’s shifting social and cultural landscape.
 
 ## Research Questions:  
-● How do film ratings vary across regions and genres, and how has this evolved over 
+- How do film ratings vary across regions and genres, and how has this evolved over 
 time? 
-● What is the influence of cast demographics – ethnicity and gender – on ratings, and do 
+- What is the influence of cast demographics – ethnicity and gender – on ratings, and do 
 these effects differ by region? 
-● How have traditional genres blended into complex combinations, and how do regional 
+- How have traditional genres blended into complex combinations, and how do regional 
 preferences respond to these trends? 
-● Can we identify time periods of historical or cultural events that coincide with 
+- Can we identify time periods of historical or cultural events that coincide with 
 significant rating shifts in movies, and for what cast demographics and cinematic 
 subjects? 
-● Can we predict which genre and demographic combinations will likely achieve the 
+- Can we predict which genre and demographic combinations will likely achieve the 
 highest ratings in each region?  
-● Which regions show the most consistent preferences in terms of genre and actor 
+- Which regions show the most consistent preferences in terms of genre and actor 
 demographics? 
 
 ## Proposed additional datasets: 
@@ -105,20 +105,20 @@ most predictable.
 ### Part 6: Formatting the final datastory and expanding modular file organization 
 
 ## Proposed timeline 
-● Week 1: Review steps 1-5 + Homework 2 
-● Week 2: Repeat steps 5-7 across genres, region, and/or time periods 
-● Week 3: Step 8 + 9 
-● Week 4: Step 10 + 11 
-● Week 5: Compile final data story, clean repository, and finalize interactive webpage. 
+- Week 1: Review steps 1-5 + Homework 2 
+- Week 2: Repeat steps 5-7 across genres, region, and/or time periods 
+- Week 3: Step 8 + 9 
+- Week 4: Step 10 + 11 
+- Week 5: Compile final data story, clean repository, and finalize interactive webpage. 
 
 ## Organization within the team:  
 Despite the below divisions, we work collaboratively and continuously to ensure we remain up 
 to date on the project happenings and to ensure no one's thinking becomes too pigeonholed. 
-● Week 1: All 
-● Week 2: Jake and Alexis 
-● Week 3: Mariem, Jacopo, Chiara 
-● Week 4: Jake, Jacopo, Chiara, Mariem 
-● Week 5: All  
+- Week 1: All 
+- Week 2: Jake and Alexis 
+- Week 3: Mariem, Jacopo, Chiara 
+- Week 4: Jake, Jacopo, Chiara, Mariem 
+- Week 5: All  
 
 ## Questions for TAs:  
 We’ll be in contact with Ziyi. 
