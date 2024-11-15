@@ -126,8 +126,10 @@ We’ll be in contact with Ziyi.
 ## References 
 [1] Asaniczka, and themoviedb.org. (2024). Full TMDB Movies Dataset 2024 (1M Movies)  
 [Data set]. Kaggle. https://doi.org/10.34740/KAGGLE/DSV/9904037 
+
 [2] Movielens. (2019). MovieLens 25M Dataset [Data set]. Grouplens.  
 https://files.grouplens.org/datasets/movielens/ml-25m-README.html  
+
 [3] https://query.wikidata.org/ 
 
 
