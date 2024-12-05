@@ -17,3 +17,20 @@ def get_historical_proximity_score(row, historical_proximity_score):
         return historical_proximity_score.loc[country, release_year]
     else:
         return None
+    
+def map_regions(regions):
+    """
+    map_regions - maps countries to the corresponding regions.
+
+    Inputs: - region (dictionary): countries and corresponding regions
+
+    Outputs: - country_to_region (list): mapping list
+    """
+    # defining output
+    country_to_region = {}
+    
+    for region, countries in regions.items():
+        for country in countries:
+            country_to_region[country] = region
+
+    return country_to_region
