@@ -46,3 +46,26 @@ def fill_col1(row, col1, col2, col3, unmatched):
         # retrieve either col2 or col3 if the first is nan
         return row[col1] if pd.notna(row[col1]) else (
             row[col2] if pd.notna(row[col2]) else row[col3])
+    
+def fill_historical_proximity(country, events, df):
+    """
+    fill_historical_proximity - applied to an historical proximity score
+    df, fills its entries based on their historical proximity scores. See
+    results.ipynb notebook for score definition details.
+
+    Inputs: - country (string): current country to be filled
+            - events (dictonary): contains all considered events and associated
+             scores for the current country
+            - df (dataframe): countries vs release_date dataframe to be filled
+
+    Outputs: - df (dataframe): filled dataframe
+    """
+    # looping on events
+    for event in events:
+        # looping on 5 years folloqing the current event
+        for offset in range(6):
+            year = event["release_date"] + offset
+            if year in df.columns:
+                df.loc[country, year] = round(event["score"]*max(0, 1 - 0.2*offset), 2)
+
+    return df
