@@ -85,6 +85,7 @@
         'Cambodian Americans','Thai Americans','Pakistani Americans','Hiligaynon people', 'Minangkabau', 'Hakka people', 'Moksha', 'Bicolano people', 'Boholano people', 'Mongols in China'
     ],
     'MENA' : [ 
+        'Jewish people' , 'history of the Jews in India'  , 
         'Syria', 'Ottoman Empire', 'Kingdom of Egypt', 'Republic of Egypt', 'Pahlavi Iran', 'Pahlavi dynasty', 
         'Jordan', 'Mandatory Palestine','French protectorate of Tunisia',
         'Assyrian people', 'Kurds', 'Israeli Jews', 'Copts','Egypt', 'Palestinians', 'Palestinians in Israel', 'Iranian Armenians',
