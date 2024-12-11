@@ -1,18 +1,18 @@
 { 
     'Carribean/Native North Americans' :['Mohawk', 'multiracial American','Indigenous peoples of the Americas',
-                                        'First Nations', 'Blackfoot Confederacy', 'Inuit', 'Sioux', 'Lumbee', 'Cree',
+                                        'First Nations', 'Blackfoot Confederacy', 'Inuit', 'Sioux', 'Lumbee', 'Cree','Kingdom of Hawaiʻi' ,
                                        'Native Americans in the United States', 'Cherokee',  'Native Hawaiians','Cajun','Choctaw', 'Apache', 'Five Nations'
                                        , 'Cheyennes', 'Dene', 'Nez Perce', 'Oneida', 'Ho-Chunk', 'Indo Caribbeans', 'Purepecha', 'Iroquois', 'Lule Sámi people', 'Muscogee'
                                        , 'Sea Sámi', 'Mohawk', 'Cayuga people', 'Tongva people', 'Navajo', 'Nuu-chah-nulth people', 'Northern Sámi people',
                                         'Louisiana Creole people', 'Afro-Guyanese',  'Sierra Leone Creole people','Rosebud Indian Reservation', 'Métis', 'Iñupiaq people',
-                                       'Omaha Tribe of Nebraska', 'Barbadian Americans' ,  'Bahamian Americans', 'Haitian Americans','Kingdom of Hawaii'
+                                       'Omaha Tribe of Nebraska', 'Barbadian Americans' , 'The Bahamas', 'Bahamian Americans', 'Haitian Americans','Kingdom of Hawaii'
                                                                                                      
     ],
     'North Americans' : ['Tamil Americans' , 'Asian Americans','Chinese Americans','Sri Lankan Americans','Korean Americans','Japanese Americans',
                          'Taiwanese Americans','Thai Americans','Vietnamese Americans','Cambodian Americans','Syrian Americans','Turkish Americans' ,
                          'Indian Americans' , 'Arab Americans', 'Lebanese Americans','Iraqi Americans' ,'Filipino Americans', 'Hmong Americans',
-                         'Ghanaian Americans','African Americans','African-American Jews','Moroccan Americans','Nigerian Americans'
-                        ,'South African Americans', 'Canadian Australian','Chilean Americans','Bolivian Americans', 'Ecuadorian Americans','Colombian American',
+                         'Ghanaian Americans','African-American Jews','Moroccan Americans','Nigerian Americans'
+                        ,'South African Americans','Gujarati Canadians', 'Canadian Australian','Chilean Americans','Bolivian Americans', 'Ecuadorian Americans','Colombian American',
                         'Panamanian Americans' ,'Indonesian Americans', 'Colombian Americans', 'Black Canadians', 'Armenian Americans', 'Croatian Canadians', 
                         'Acadians', 'Honduran Americans', 'White Latin American','Canadians in the United Kingdom', 'Scottish Canadians',
                          'Serbian Canadians','Bangladeshi Americans', 'Dutch Canadians', 'Italian Canadians','Chinese Canadians', 'Polish Canadians', 
@@ -34,7 +34,7 @@
                         
     ], 
 
-    'Latin America-Hispanics':[
+    'Latin America':[
         'Nicaragua', 'Suriname', 'Haiti', 'Bolivia', 'El Salvador', 'Trinidad and Tobago', 'Brazilian British', 
         'Ecuador', 'Dominica', 'Paraguay', 'Grenada',
         'Mexico', 'Argentina','Brazil' , 'Guyana', 'Venezuela', 'Barbados', 'Uruguay', 'Peru', 'Puerto Rico', 'Jamaica', 'Costa Rica', 'Panama', 'Honduras', 
@@ -52,8 +52,8 @@
     ],
     'India': [
         'British Raj', 'Dominion of India', 
-        'Jatt Sikh', 'Marwari people', 'Mohyal', 'Rohilla', 'Agrawal', 'India', 
-        'Mangaloreans', 'History of the Jews in India','Goans', 'Dalit',
+        'Jatt Sikh','Bengal', 'Marwari people', 'Mohyal', 'Rohilla', 'Agrawal', 'India', 
+        'Mangaloreans', 'Gujarati Canadians','History of the Jews in India','Goans', 'Dalit',
         'Bengali Hindus' ,'Nepali Indian' , 'Kashmiri people', 'Indian diaspora in France' , 
         'Indo-Guyanese', 'Bengali Brahmins','Punjabi diaspora', 'Indian diaspora' , 'British Indian','Anglo-Indian people',
         'Indians', 'Punjabis', 'Tamil', 'Malayali', 'Dogra','Bengali', 'Marathi people', 
@@ -65,8 +65,8 @@
         'Niyogi', 'Romani people','Hindkowans', 'Brahmin', 'Hindu', 'Chettiar','Pathani' ,'Indian Australian','Telugu Brahmins'
     ],
     'Asia': [
-        "People's Republic of China", 'Singapore', 'Thailand', 'Sri Lanka', 'Malaysia', 'Bangladesh', 'Korea', 
-        'Cambodia', 'Indonesia', 'Myanmar', 'Nepal', 'China', 'Qing dynasty', 'Vietnam', 'Bhutan', 'Azerbaijan',
+        "Tuvan People's Republic",'Beiyang Government',"People's Republic of China", 'Singapore', 'Thailand', 'Sri Lanka', 'Malaysia', 'Bangladesh', 'Korea', 
+        'Cambodia', 'Korean Empire','Indonesia', 'Myanmar', 'Nepal', 'China', 'Qing dynasty', 'Vietnam', 'Bhutan', 'Azerbaijan',
         'Kurdistan', 'Taiwan under Japanese rule', 'Aceh', 'Afghanistan', 'Brunei', 'Tibet', 'Uzbekistan',
         'Kazakhstan', 'Mongolia', 'Laos', 'Gin people', 'Kyrgyzstan','Republic of Vietnam',
         'British Hong Kong', 'Philippines','Peoples Republic of China' , 'Turkey','Republic of China (1912–1949)',
@@ -102,7 +102,7 @@
         'England',  'West Germany', 'Germany', 'Iceland','Gibraltarian people', 'Northern Cyprus',  
         'Kingdom of Bavaria', 'German Reich', 'Cornish Canadians', 'Kingdom of Sardinia', 'Malta', 
         'Crown Colony of Malta', 'State of Malta', 'Isle of Man', 'Mediterranean race', 
-        'Kingdom of Portugal', 'Greeks', 'Manx people',
+        'Kingdom of Portugal', 'Greeks', 'Manx people','White Africans of European ancestry','White South Africans' ,'White people' , 'White Americans',
          'Italy', 'Luxembourg','Swiss', 'French', 'Dutch', 'Irish people', 'English people', 'Irish Americans', 'Luxembourgish Canadians', 'German Americans', 'British Canadians',
         'Norwegian Americans', 'Czech Americans', 'Scotland', 'Finland', 'Ukraine', 'Georgia', 
         'Armenians', 'Armenia', 'Moldova', 'Republic of Ireland', 'Irish Free State',
@@ -130,7 +130,7 @@
         'Swedes', 'Scandinavian Americans','Basque people' ,'Swedish Australian','Finns', 'Swedish Canadians','Galicians','Captaincy General of Catalonia'
     ],
     'East European': [
-         'Democratic Republic of Georgia',"Luhansk People's Republic",
+        'Far Eastern Republic','Nazi Germany','Cisleithania' ,'Kingdom of Romania','Albania', 'Kosovo','Democratic Republic of Georgia',"Luhansk People's Republic",
         "Polish People's Republic", 'North Macedonia', 'Kingdom of Yugoslavia', 'German Democratic Republic', 
         'Russian Republic', 'Russian Socialist Federative Soviet Republic', 'Russian Soviet Federative Socialist Republic',
         'Kingdom of Hungary', 'Weimar Republic', 'German Empire', 'Belarus', 'Yugoslavia', 'Federal Republic of Yugoslavia',
@@ -149,13 +149,12 @@
         'Serbian Canadians' , 'Serbs of Croatia' , 'Slovene Americans' ,   'Czech Republic' , 'Poland' , 
         'Soviet people' ,'Slovenes', 'Romanians','Czech Australians' , 'Polish Canadians', 'Austrian Americans',
         'Polish Americans', 'Ukrainian Americans', 'Russian Americans', 'Lithuanian Americans', 
-        'Czech Americans', 'Slovak Americans', 'Serbian Americans', 'Croatian Americans', 
+        'Czech Americans', 'Slovak Americans', 'Serbian Americans', 'Croatian Americans', 'White Africans of European ancestry','White South Africans' ,'White people' , 'White Americans',
         'Hungarian Americans', 'Russians', 'Slovaks', 'Belarusians', 'Ukrainians', 'Czechs','Russia' , 
         'Romanian Americans',  'Serbian Australians'  ,'Hungarians', 'Bosniaks', 'Ukrainian Canadians '
     ],
-    'European' : ['White Africans of European ancestry','White South Africans' ,'White people' , 'White Americans' ], 
     'Australian': [
-        'Fiji', 'Papua New Guinea', 
+        'Fiji', 'Papua New Guinea', 'Samoa',
         'Colombian Australian','Canadian Australian','Australia', 'New Zealand' , 
         'Filipino Australians' , 'Māori', 'Greek Australians','Croatian Australians',
         'Australians', 'Anglo-Celtic Australians', 'Aboriginal Australians', 'Scottish Australians', 
@@ -163,7 +162,7 @@
         'English Australian', 'Swedish Australian', 'Serbian Australians'  , 'Samoan New Zealanders' , 'Indian Australian','Dutch Australian','Sudanese Australians'
     
     ],
-    'African': [
+    'South and Central African': [
         'African Brazilians', 'Black people', 'Igbo people', 'Yoruba', 'Afro-Uruguayan',
         'South Africa', 'Nigeria', 'Sierra Leone', 'Ghana', 'Ivory Coast', 'Kenya', 'Ethiopia', 'Uganda', 'Chad', 
         'Cameroon', 'Senegal', 'Mali', 'Zambia', 'Rwanda', 'Burkina Faso', 'Democratic Republic of the Congo',
@@ -174,6 +173,5 @@
         'Afro-Cuban', 'White South African' ,'Kikuyu', 'Sierra Leoneans in the United Kingdom', 'African people' ,'Sudanese Australians',
         'Namibia', 'Mauritania', 'Benin', 'Cape Verde', 'The Gambia', 'Zimbabwe', 'Mozambique', 'Guinea', 'Equatorial Guinea', 
         'Eritrea', 'Belgian Congo', 'Republic of the Congo (Léopoldville)', 'Republic of the Congo'
-    
     ],
 }
