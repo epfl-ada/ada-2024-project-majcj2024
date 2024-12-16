@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 import pandas as pd
+import numpy as np
 
 # adding the 'src' directory to sys.path so Python can find utils/filling.py
 sys.path.append(str(Path(__file__).resolve().parent.parent))
@@ -14,14 +15,30 @@ df_movies_tmdb_ratings = pd.read_pickle(input_path)
 
 # column index
 unique_release_dates = sorted(df_movies_tmdb_ratings['release_date'].unique())
+print(unique_release_dates)
 
 # row index
-unique_countries = df_movies_tmdb_ratings['countries'].unique()
+all_countries = ['United States of America', 'Canada', 'Israel', 'South Korea', 'Italy', 'Hungary', 'United Kingdom', 
+                 'Netherlands', 'Japan', 'Bosnia and Herzegovina', 'Germany', 'Iran', 'Croatia', 'France', 'Singapore', 
+                 'Turkey', 'New Zealand', 'India', 'Egypt', 'Hong Kong', 'Norway', 'Mexico', 'South Africa', 'Australia', 
+                 'Thailand', 'Romania', 'Sweden', 'Poland', 'Spain', 'Brazil', 'Bahrain', 'German Democratic Republic', 
+                 'Taiwan', 'Chile', 'Denmark', 'England', 'West Germany', 'Bulgaria', 'Portugal', 'Ireland', 'Estonia', 
+                 'Argentina', 'Czech Republic', 'Colombia', 'Yugoslavia', 'Czechoslovakia', 'Mongolia', 'Belgium', 'Serbia', 
+                 'Finland', 'Greece', 'Philippines', 'Iceland', 'Malaysia', 'Indonesia', 'Bangladesh', 'Puerto Rico', 
+                 'Sri Lanka', 'Ukraine', 'Austria', 'Slovenia', 'Lebanon', 'Switzerland', 'Senegal', 'Bahamas', 'Algeria', 
+                 'Cameroon', 'Costa Rica', 'Peru', 'Jamaica', 'Albania', 'Cuba', 'Kingdom of Great Britain', 
+                 'Palestinian territories', 'Kenya', 'Morocco', 'Tunisia', 'Serbia and Montenegro', 'Slovakia', 'Nepal', 
+                 'Democratic Republic of the Congo', 'Nigeria', 'Bolivia', 'Lithuania', 'Vietnam', 'Malta', 'Luxembourg', 
+                 'Venezuela', 'Federal Republic of Yugoslavia', 'Scotland', 'Zimbabwe', 'Weimar Republic', 
+                 'Republic of Macedonia', 'Georgian SSR', 'Iraq', 'Libya', 'Russia', 'China', 'Uruguay', 'Georgia', 
+                 'Soviet Union', 'Azerbaijan', 'Slovak Republic', 'Kuwait', 'Mali', 'Qatar', 'Monaco', 'Armenia', 'Korea', 
+                 'United Arab Emirates', 'Pakistan', 'Burkina Faso', 'Northern Ireland', 'Wales', 
+                 'Socialist Federal Republic of Yugoslavia', 'Haiti', 'Uzbekistan', 'Afghanistan', 'Mandatory Palestine', 
+                 'Nazi Germany', 'Isle of Man', 'Kingdom of Italy', 'Cambodia', 'Ukrainian SSR', 'Zambia', 'Bhutan', 'Crime', 
+                 'Panama', 'Aruba', 'Montenegro']
 
-# DataFrame creation
-historical_proximity_score = pd.DataFrame(index=unique_countries, columns=unique_release_dates)
-
-# initializing as empty
+# DataFrame creation, initializing as empty
+historical_proximity_score = pd.DataFrame(index=all_countries, columns=unique_release_dates)
 historical_proximity_score[:] = 0
 
 # filling steps

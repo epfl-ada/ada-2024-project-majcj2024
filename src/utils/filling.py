@@ -62,7 +62,7 @@ def fill_historical_proximity(country, events, df):
     """
     # looping on events
     for event in events:
-        # looping on 5 years folloqing the current event
+        # looping on 5 years following the current event
         for offset in range(6):
             year = event["release_date"] + offset
             if year in df.columns:
