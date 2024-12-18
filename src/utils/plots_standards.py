@@ -13,7 +13,9 @@ styles = {
     },
 
     'scatter_style': {
-        's': 5
+        's': 5,
+        'color': 'cornflowerblue',
+        'alpha': 0.5
     },
 
     'line_style': {
