@@ -99,3 +99,28 @@ def drop_most_missing(df, cols):
     df_cleaned = df_cleaned.drop(columns=['missing_values'])
     
     return df_cleaned
+
+def count_entries(df, col):
+    """
+    count_entries - given a dataframe and one of its columns where entries are lists
+    of strings, the function counts how many elements are present in each entry. Then, 
+    it returns the percentages of 1-element lists over all entries.
+
+    Inputs: - df (dataframe): dataframe to be cleaned
+            - col (string): considered column
+
+    Outputs: - perc_1 (float): percentage of entries with 1-element lists
+             - entries_1 (dataframe): subset of the initial dataframe with 1-element entries
+    """
+    # counting elements
+    df['counts'] = df[col].str.len()
+
+    # retrieving 1-element and more than 1-element entries
+    entries_1 = df[df['counts'] == 1.0]
+
+    size_1 = entries_1.size
+    total = df.size
+
+    perc_1 = size_1/total
+    
+    return perc_1, entries_1
