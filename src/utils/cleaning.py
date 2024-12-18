@@ -124,3 +124,33 @@ def count_entries(df, col):
     perc_1 = size_1/total
     
     return perc_1, entries_1
+
+def evaluate_genre_counts(df, col, max_range):
+    """
+    evaluate_genre_counts - evaluates percentages of movies with a specific range of genre counts
+    and subsets the data for those counts.
+
+    Inputs: - df (dataframe): the dataframe to analyze
+            - col (string): the column containing lists (e.g., genres)
+            - max_range (int): the maximum number of genres to evaluate (e.g., up to 6 genres)
+
+    Outputs: - percentages (dict): a dictionary with ranges as keys and percentages as values
+             - subsets (dict): a dictionary with ranges as keys and dataframes as values
+    """
+    # Initialize dictionaries to store results
+    percentages = {}
+    subsets = {}
+
+    # Calculate the count of genres
+    df['genre_count'] = df[col].str.len()
+
+    # Loop through the range to calculate percentages and filter subsets
+    for i in range(1, max_range + 1):
+        condition = df['genre_count'] <= i
+        subset = df[condition]
+        percentage = subset.size / df.size
+        
+        subsets[f"1_to_{i}_genre"] = subset
+        percentages[f"1_to_{i}_genre"] = percentage
+
+    return percentages, subsets
