@@ -77,3 +77,17 @@ country_to_region = {}
 for region, countries in regions.items():
     for country in countries:
         country_to_region[country] = region
+
+# mapping actors ethnicities to regions
+ethnicity_to_region = {
+    'Asia': 'Remaining Asia',
+    'Australian': 'Oceania',
+    'Caribbean/Native North Americans': 'North America', 
+    'Latin America': 'Central and South America',
+    'East European': 'Eastern Europe',
+    'India': 'India',
+    'MENA': 'North Africa and Middle East',
+    'North Americans': 'North America',
+    'South and Central African': 'South Africa and Central Africa',
+    'West European': 'Western Europe',
+}
