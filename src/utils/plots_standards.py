@@ -13,7 +13,7 @@ styles = {
     },
 
     'scatter_style': {
-        's': 5,
+        's': 20,
         'color': 'cornflowerblue',
         'alpha': 0.5
     },
