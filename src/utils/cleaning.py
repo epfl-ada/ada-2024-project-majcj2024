@@ -154,3 +154,26 @@ def evaluate_genre_counts(df, col, max_range):
         percentages[f"1_to_{i}_genre"] = percentage
 
     return percentages, subsets
+
+def categorize_decade(release_date):
+    """
+    categorize_decade - categorizes a movie's release year into a specific decade.
+
+    Inputs: - release_date (int or float): the release year of the movie to be categorized
+
+    Outputs: - (str or None): the decade to which the release year belongs (e.g., '1950', '1960', etc.), or None if it doesn't fit the specified range
+    """
+    if 1950 <= release_date < 1960:
+        return '1950'
+    elif 1960 <= release_date < 1970:
+        return '1960'
+    elif 1970 <= release_date < 1980:
+        return '1970'
+    elif 1980 <= release_date < 1990:
+        return '1980'
+    elif 1990 <= release_date < 2000:
+        return '1990'
+    elif 2000 <= release_date < 2010:
+        return '2000'
+    else:
+        return None
