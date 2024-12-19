@@ -47,6 +47,30 @@ def fill_col1(row, col1, col2, col3, unmatched):
         return row[col1] if pd.notna(row[col1]) else (
             row[col2] if pd.notna(row[col2]) else row[col3])
     
+def fill_ethnicity(row, unmatched_ethnicities):
+    """
+    fill_ethnicity - Resolves and fills ambiguous or missing ethnicity labels in a dataset.
+
+    Inputs: - row (Series): A Pandas Series representing a single row of a DataFrame, 
+              containing 'ethnicity_label', 'nationalityLabel', and other relevant fields.
+            - unmatched_ethnicities (set): A set of ethnicity labels considered ambiguous 
+              or unmatched, requiring resolution via the nationality label.
+
+    Outputs: - filled_value (string): A resolved value for the ethnicity label, 
+                prioritized as follows:
+                1. Nationality label if ethnicity is ambiguous or missing.
+                2. Ethnicity label if available and not ambiguous.
+                3. Falls back to 'ethnicity_label' if other fields are missing.
+    """
+    if row['ethnicity_label'] in unmatched_ethnicities:
+        # If the ethnicity is ambiguous, retrieve the nationality
+        return row['nationalityLabel'] if pd.notna(row['nationalityLabel']) else (
+            row['ethnicityLabel'] if pd.notna(row['ethnicityLabel']) else row['ethnicity_label'])
+    else:
+        # For non-ambiguous cases, retrieve the ethnicity label associated to it or fallback to nationality
+        return row['ethnicity_label'] if pd.notna(row['ethnicity_label']) else (
+            row['ethnicityLabel'] if pd.notna(row['ethnicityLabel']) else row['nationalityLabel'])
+
 def fill_historical_proximity(country, events, df):
     """
     fill_historical_proximity - applied to an historical proximity score
