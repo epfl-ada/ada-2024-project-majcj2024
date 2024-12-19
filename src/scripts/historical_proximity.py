@@ -10,11 +10,11 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 from utils.filling import fill_historical_proximity
 
 # loading df_movies_tmdb_ratings from the pickle file
-input_path = Path("src/scripts/df_movies_tmdb_ratings.pkl")
-df_movies_tmdb_ratings = pd.read_pickle(input_path)
+input_path = Path("src/scripts/df_movies_model.pkl")
+df_movies_model = pd.read_pickle(input_path)
 
 # column index
-unique_release_dates = sorted(df_movies_tmdb_ratings['release_date'].unique())
+unique_release_dates = sorted(df_movies_model['release_date'].unique())
 print(unique_release_dates)
 
 # row index
