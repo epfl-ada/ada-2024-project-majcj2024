@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from scipy.stats import f_oneway
 
 def calculate_genre_statistics(df, genres, regions_groupings):
     """
@@ -189,3 +190,79 @@ def calculate_genre_region_decade_statistics(df, top_genres, regions, decades):
         confidence_intervals[genre] = region_CI
 
     return mean_ratings, confidence_intervals
+
+def calculate_genre_anova_p_values(df, top_genres, regions):
+    """
+    calculate_genre_anova_p_values - Computes ANOVA p-values for average ratings of genres across regions.
+
+    Inputs: - df (DataFrame): DataFrame containing columns 'genres', 'region', and 'averageRating'
+            - top_genres (list): List of top genres to analyze
+            - regions (list): List of regions names
+        
+    Outputs: - p_values (dict): Dictionary mapping each genre to its ANOVA p-value (or None if data is insufficient)
+    """
+    # Initialize the dictionary to store p-values
+    p_values = {}
+
+    # Loop through each genre
+    for genre in top_genres:
+        # taking current genre dataframe
+        genre_df = df[df["genres"] == genre]
+
+        # Collect ratings for each region
+        region_ratings = {}
+        for region in regions:
+            region_ratings[region] = genre_df[genre_df["region"] == region]["averageRating"].to_list()
+
+        # Check if all regions have non-zero ratings
+        if all(len(ratings) > 0 and all(rating != 0.0 for rating in ratings) for ratings in region_ratings.values()):
+            
+            # Perform ANOVA
+            result = f_oneway(*region_ratings.values())
+            p_values[str(genre)] = result[1]
+        else:
+            # If any region lacks data, store None
+            p_values[str(genre)] = None
+
+    return p_values
+
+def analyze_genre_ratings_by_region(df, regions):
+    """
+    analyze_genre_ratings_by_region - Performs the Kruskal-Wallis test on average ratings of genres within each region.
+
+    Inputs: - df (DataFrame): DataFrame containing columns 'region', 'genres', and 'averageRating'
+            - regions (list): List of regions
+
+    Outputs: - Prints the Kruskal-Wallis statistic, p-value, and conclusions for each region
+    """
+    from scipy.stats import kruskal
+
+    # Looping through each region
+    for region in regions:
+        print(f"Results for region: {region}")
+        
+        # Dividing the data for the region
+        df_region = df[df['region'] == region]
+        
+        # Collecting ratings for each genre
+        genre_groups = []
+
+        # Grouping the regional movies by genres
+        for genre, group in df_region.groupby('genres'):
+            # Extracting the ratings column for the current genre and append it as an array to the list of genre ratings
+            ratings = group['averageRating'].values
+            genre_groups.append(ratings)
+
+        # Performing the Kruskal-Wallis test across the genres by unpacking each list of ratings per genre
+        if len(genre_groups) > 1:
+            stat, p_value = kruskal(*genre_groups)
+            print(f"Kruskal-Wallis Statistic: {stat:.4f}, p-value: {p_value:.4f}")
+            
+            # Checking the significance threshold
+            if p_value < 0.05:
+                print(f"The null hypothesis is rejected; there is a suggested statistically significant difference in movie ratings by genre for movies in {region}.")
+            else:
+                print(f"The null hypothesis is failed to be rejected and a statistically significant difference in ratings across genres cannot be claimed for movies in {region}.")
+        
+        # Formatting in a clear way
+        print("\n" + "-"*50 + "\n")
