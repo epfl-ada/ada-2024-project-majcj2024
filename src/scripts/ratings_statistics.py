@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from scipy.stats import f_oneway
+from scipy.stats import kruskal
 
 def calculate_genre_statistics(df, genres, regions_groupings):
     """
@@ -17,7 +18,7 @@ def calculate_genre_statistics(df, genres, regions_groupings):
     confidence_intervals = {}
 
     for genre in genres:
-        # Group by region
+        # grouping by region
         genre_mean_ratings = df[df["genres"] == genre].groupby("region")
 
         # getting current size
@@ -27,24 +28,24 @@ def calculate_genre_statistics(df, genres, regions_groupings):
         genre_mean_ratings_regions_average = genre_mean_ratings.mean("averageRating").apply(lambda x: round(x*2)/2).sort_index()
         genre_mean_ratings_regions_stderr = genre_mean_ratings["averageRating"].std().sort_index() / np.sqrt(genre_mean_ratings_size)  
 
-        # Store the mean ratings and confidence intervals for the genre
+        # storing the mean ratings and confidence intervals for the genre
         genre_means = []
         genre_CI = []
         for region in regions_groupings:
-            # Handle cases with less than 10 movies
+            # cases with less than 10 movies
             if genre_mean_ratings_size.loc[region] < 10:
                 mean_rating = 0.0
                 CI = 0.0
             else:
                 mean_rating = genre_mean_ratings_regions_average.loc[region]["averageRating"]
 
-                # compute CI assuming normal distribution
+                # computing 95% CI assuming normal distribution
                 CI = genre_mean_ratings_regions_stderr.loc[region] * 1.96
 
             genre_means.append(mean_rating)
             genre_CI.append(CI)
 
-        # Append the results to the dictionaries
+        # appending the results to the dictionaries
         mean_ratings[genre] = genre_means
         confidence_intervals[genre] = genre_CI
 
@@ -65,28 +66,28 @@ def calculate_region_statistics(df, regions, top_genres):
     confidence_intervals = {}
 
     for region in regions:
-        # Group by genre
+        # grouping by genre
         genre_mean_ratings = df[df["region"] == region].groupby("genres")
 
         # getting current size
         genre_mean_ratings_size = genre_mean_ratings.size().sort_index()
 
-        # calculate mean ratings and stderr
+        # calculating mean ratings and stderr
         genre_mean_ratings_regions_average = genre_mean_ratings.mean("averageRating").apply(lambda x: round(x*2)/2).sort_index()
         genre_mean_ratings_regions_stderr = genre_mean_ratings["averageRating"].std().sort_index() / np.sqrt(genre_mean_ratings_size)
 
-        # Store the mean ratings and confidence intervals for the region
+        # storing the mean ratings and confidence intervals for the region
         region_means = []
         region_CI = []
         for genre in top_genres:
             mean_rating = genre_mean_ratings_regions_average.loc[genre]["averageRating"]
             region_means.append(mean_rating)
 
-            # Calculate the 95% confidence interval (mean +/- 1.96 * stderr assuming normal distribution)
+            # computing 95% CI assuming normal distribution
             CI = genre_mean_ratings_regions_stderr.loc[genre] * 1.96
             region_CI.append(CI)
 
-        # Append the results to the dictionaries
+        # appending the results to the dictionaries
         mean_ratings[region] = region_means
         confidence_intervals[region] = region_CI
 
@@ -109,23 +110,23 @@ def calculate_region_decade_statistics(df, regions, top_genres, decades):
     confidence_intervals = {}
 
     for region in regions:
-        # Group by genre and decade
+        # grouping by genre and decade
         genre_mean_ratings = df[df["region"] == region].groupby(["genres", "decade"])
 
         # getting current size
         genre_mean_ratings_size = genre_mean_ratings.size().sort_index()
 
-        # calculate the necessary values
+        # calculating the necessary values
         genre_mean_ratings_regions_average = genre_mean_ratings.mean("averageRating").sort_index()
         genre_mean_ratings_regions_stderr = genre_mean_ratings["averageRating"].std().sort_index() / np.sqrt(genre_mean_ratings_size)
 
-        # Initialize arrays to store the results
+        # initializing arrays to store the results
         region_means = np.zeros((len(top_genres), len(decades)))
         region_CI = np.zeros((len(top_genres), len(decades)))
 
-        # loop on top_genres
+        # looping on top_genres
         for i, genre in enumerate(top_genres):
-            # loop on decades
+            # looping on decades
             for j, decade in enumerate(decades):
                 if genre_mean_ratings_size.loc[(genre, decade)] < 3:
                     region_means[i][j] = 0.0
@@ -134,7 +135,7 @@ def calculate_region_decade_statistics(df, regions, top_genres, decades):
                     region_means[i][j] = genre_mean_ratings_regions_average.loc[(genre, decade), "averageRating"]
                     region_CI[i][j] = genre_mean_ratings_regions_stderr.loc[(genre, decade)] * 1.96
 
-        # Store the results in the dictionaries
+        # storing the results in the dictionaries
         mean_ratings[region] = region_means
         confidence_intervals[region] = region_CI
 
@@ -145,37 +146,37 @@ def calculate_genre_region_decade_statistics(df, top_genres, regions, decades):
     calculate_genre_region_decade_statistics - calculates the mean ratings and confidence intervals 
     for movies per region per genre over decades.
 
-    Inputs: - df (DataFrame): The dataframe containing movie ratings by region, genre, and decade
-            - top_genres (list): List of the top genres to process
-            - regions (list): List of regions
-            - decades (list): List of decades to evaluate
+    Inputs: - df (DataFrame): the dataframe containing movie ratings by region, genre, and decade
+            - top_genres (list): list of the top genres to process
+            - regions (list): list of regions
+            - decades (list): list of decades to evaluate
 
-    Outputs: - mean_ratings (dict): Dictionary containing mean ratings per region and genre per decade
-             - confidence_intervals (dict): Dictionary containing the 95% confidence intervals per region and genre per decade
+    Outputs: - mean_ratings (dict): dictionary containing mean ratings per region and genre per decade
+             - confidence_intervals (dict): dictionary containing the 95% confidence intervals per region and genre per decade
     """
-    # Dictionaries to store the results
+    # defining dictionaries to store the results
     mean_ratings = {}
     confidence_intervals = {}
 
-    # Loop through each genre to calculate mean ratings and confidence intervals per region per decade
+    # looping through each genre to calculate mean ratings and confidence intervals per region per decade
     for genre in top_genres:
         genre_df = df[df["genres"] == genre]
 
-        # Group by region and decade
+        # grouping by region and decade
         region_mean_ratings = genre_df.groupby(["region", "decade"])
 
         # getting current size
         region_mean_ratings_size = region_mean_ratings.size().sort_index()
 
-        # calculate mean ratings and standard error
+        # calculating mean ratings and standard error
         region_mean_ratings_regions_average = region_mean_ratings.mean("averageRating").sort_index()
         region_mean_ratings_regions_stderr = region_mean_ratings["averageRating"].std().sort_index() / np.sqrt(region_mean_ratings_size)
 
-        # Initialize arrays to store the results for each region and decade
+        # initializing arrays to store the results for each region and decade
         region_means = np.zeros((len(regions), len(decades)))
         region_CI = np.zeros((len(regions), len(decades)))
 
-        # Loop over each region and decade to fill in the statistics
+        # looping over each region and decade to fill in the statistics
         for i, region in enumerate(regions):
             for j, decade in enumerate(decades):
                 if region_mean_ratings_size.loc[(region, decade)] < 3:
@@ -185,7 +186,7 @@ def calculate_genre_region_decade_statistics(df, top_genres, regions, decades):
                     region_means[i][j] = region_mean_ratings_regions_average.loc[(region, decade), "averageRating"]
                     region_CI[i][j] = region_mean_ratings_regions_stderr.loc[(region, decade)] * 1.96
 
-        # Store the results in the dictionaries
+        # storing the results in the dictionaries
         mean_ratings[genre] = region_means
         confidence_intervals[genre] = region_CI
 
@@ -193,109 +194,107 @@ def calculate_genre_region_decade_statistics(df, top_genres, regions, decades):
 
 def calculate_genre_anova_p_values(df, top_genres, regions):
     """
-    calculate_genre_anova_p_values - Computes ANOVA p-values for average ratings of genres across regions.
+    calculate_genre_anova_p_values - computes ANOVA p-values for average ratings of genres across regions.
 
     Inputs: - df (DataFrame): DataFrame containing columns 'genres', 'region', and 'averageRating'
-            - top_genres (list): List of top genres to analyze
-            - regions (list): List of regions names
+            - top_genres (list): list of top genres to analyze
+            - regions (list): list of regions names
         
-    Outputs: - p_values (dict): Dictionary mapping each genre to its ANOVA p-value (or None if data is insufficient)
+    Outputs: - p_values (dict): dictionary mapping each genre to its ANOVA p-value (or None if data is insufficient)
     """
-    # Initialize the dictionary to store p-values
+    # initializing dictionary to store p-values
     p_values = {}
 
-    # Loop through each genre
+    # looping through each genre
     for genre in top_genres:
         # taking current genre dataframe
         genre_df = df[df["genres"] == genre]
 
-        # Collect ratings for each region
+        # collecting ratings for each region
         region_ratings = {}
         for region in regions:
             region_ratings[region] = genre_df[genre_df["region"] == region]["averageRating"].to_list()
 
-        # Check if all regions have non-zero ratings
+        # checking if all regions have non-zero ratings
         if all(len(ratings) > 0 and all(rating != 0.0 for rating in ratings) for ratings in region_ratings.values()):
             
-            # Perform ANOVA
+            # performing ANOVA
             result = f_oneway(*region_ratings.values())
             p_values[str(genre)] = result[1]
         else:
-            # If any region lacks data, store None
+            # store None if lack of data
             p_values[str(genre)] = None
 
     return p_values
 
 def analyze_genre_ratings_by_region(df, regions):
     """
-    analyze_genre_ratings_by_region - Performs the Kruskal-Wallis test on average ratings of genres within each region.
+    analyze_genre_ratings_by_region - performs the Kruskal-Wallis test on average ratings of genres within each region.
 
     Inputs: - df (DataFrame): DataFrame containing columns 'region', 'genres', and 'averageRating'
-            - regions (list): List of regions
+            - regions (list): list of regions
 
-    Outputs: - Prints the Kruskal-Wallis statistic, p-value, and conclusions for each region
+    Outputs: - prints the Kruskal-Wallis statistic, p-value, and conclusions for each region
     """
-    from scipy.stats import kruskal
-
-    # Looping through each region
+    # looping through each region
     for region in regions:
         print(f"Results for region: {region}")
         
-        # Dividing the data for the region
+        # dividing the data for the region
         df_region = df[df['region'] == region]
         
-        # Collecting ratings for each genre
+        # collecting ratings for each genre
         genre_groups = []
 
-        # Grouping the regional movies by genres
+        # grouping the regional movies by genres
         for genre, group in df_region.groupby('genres'):
-            # Extracting the ratings column for the current genre and append it as an array to the list of genre ratings
+            # extracting the ratings column for the current genre and append it as an array to the list of genre ratings
             ratings = group['averageRating'].values
             genre_groups.append(ratings)
 
-        # Performing the Kruskal-Wallis test across the genres by unpacking each list of ratings per genre
+        # performing the Kruskal-Wallis test across the genres by unpacking each list of ratings per genre
         if len(genre_groups) > 1:
             stat, p_value = kruskal(*genre_groups)
             print(f"Kruskal-Wallis Statistic: {stat:.4f}, p-value: {p_value:.4f}")
             
-            # Checking the significance threshold
+            # checking the significance threshold
             if p_value < 0.05:
                 print(f"The null hypothesis is rejected; there is a suggested statistically significant difference in movie ratings by genre for movies in {region}.")
             else:
                 print(f"The null hypothesis is failed to be rejected and a statistically significant difference in ratings across genres cannot be claimed for movies in {region}.")
         
-        # Formatting in a clear way
+        # printing results in a nice way
         print("\n" + "-"*50 + "\n")
 
 def calculate_slopes(df, group_by_columns, sort_by_column, value_column):
     """
-    calculate_slopes - Calculates the slopes of average ratings between consecutive periods for movies grouped by specified columns.
+    calculate_slopes - calculates the slopes of average ratings between consecutive periods for movies grouped by specified columns.
 
     Inputs: - df (DataFrame): DataFrame containing the data to analyze
-            - group_by_columns (list): List of column names to group by (e.g., ['region', 'genres'])
-            - sort_by_column (str): Column name to sort by within each group (e.g., 'decade')
-            - value_column (str): Column name whose mean is calculated and used for slope computation (e.g., 'averageRating')
+            - group_by_columns (list): list of column names to group by (e.g., ['region', 'genres'])
+            - sort_by_column (str): column name to sort by within each group (e.g., 'decade')
+            - value_column (str): column name whose mean is calculated and used for slope computation (e.g., 'averageRating')
 
     Outputs: - slopes_df (DataFrame): DataFrame containing the slopes between consecutive periods for each group
     """
     slopes_data = []
 
-    # Group by the specified columns
+    # grouping by the specified columns
     for group_keys, group in df.groupby(group_by_columns):
         group = group.sort_values(sort_by_column)  # Sort by the specified column
         
-        # Group by the sort column and calculate the mean value
+        # grouping by the sort column and calculate the mean value
         group_means = group.groupby(sort_by_column)[value_column].mean().reset_index()
 
-        # Loop through consecutive periods
+        # looping through consecutive periods
         for i in range(1, len(group_means)):
             period1 = group_means.iloc[i-1]
             period2 = group_means.iloc[i]
             
-            # Calculate slope between two consecutive periods
+            # calculating slope between two consecutive periods
             slope = (period2[value_column] - period1[value_column]) / (period2[sort_by_column] - period1[sort_by_column])
             
-            # Store results
+            # storing results
             result = {col: key for col, key in zip(group_by_columns, group_keys)}
             result.update({
                 f'{sort_by_column}1': period1[sort_by_column],
@@ -304,12 +303,12 @@ def calculate_slopes(df, group_by_columns, sort_by_column, value_column):
             })
             slopes_data.append(result)
 
-    # Convert to DataFrame
+    # converting slopes_data to DataFrame
     return pd.DataFrame(slopes_data)
 
 def identify_top_worst_genres(slopes_df):
     """
-    identify_top_worst_genres - Identifies the genres with the steepest and shallowest slope in ratings 
+    identify_top_worst_genres - identifies the genres with the steepest and shallowest slope in ratings 
     for each region and consecutive decade pair.
 
     Inputs: - slopes_df (DataFrame): DataFrame containing columns 'region', 'decade1', 'decade2', 'genre', and 'slope'
@@ -325,15 +324,15 @@ def identify_top_worst_genres(slopes_df):
     """
     top_worst_data = []
 
-    # Group by region
+    # grouping by region
     for region, group in slopes_df.groupby('region'):
-        # Group by consecutive decades within the region
+        # grouping by consecutive decades within the region
         for decade_pair, decade_group in group.groupby(['decade1', 'decade2']):
-            # Find top and worst genres within the current decade pair
+            # finding top and worst genres within the current decade pair
             top_genre = decade_group.loc[decade_group['slope'].idxmax()]
             worst_genre = decade_group.loc[decade_group['slope'].idxmin()]
 
-            # Store the results
+            # storing the results
             top_worst_data.append({
                 'region': region,
                 'decade1': decade_pair[0],
@@ -344,17 +343,17 @@ def identify_top_worst_genres(slopes_df):
                 'worst_slope': worst_genre['slope']
             })
 
-    # Convert to DataFrame
+    # converting top_worst_data to a DataFrame
     return pd.DataFrame(top_worst_data)
 
 def anova_on_slopes(df, top_genres, regions):
     """
-    anova_on_slopes - Performs ANOVA on the slopes of average ratings between different decades 
+    anova_on_slopes - performs ANOVA on the slopes of average ratings between different decades 
     for specified genre-region combinations.
 
     Inputs: - df (DataFrame): DataFrame containing columns 'genres', 'region', 'decade', and 'averageRating'
-            - top_genres (list): List of top genres to analyze
-            - regions (list): List of regions to analyze
+            - top_genres (list): list of top genres to analyze
+            - regions (list): list of regions to analyze
 
     Outputs: - anova_results_df (DataFrame): DataFrame containing the following columns:
                 - genre: The genre analyzed
@@ -366,35 +365,35 @@ def anova_on_slopes(df, top_genres, regions):
     """
     anova_results = []
 
-    # Loop through each genre-region pair
+    # looping through each genre-region pair
     for genre in top_genres:
         for region in regions:
-            # Filter data for the current genre-region combination
+            # filtering data for the current genre-region combination
             subset_df = df[
                 (df['genres'] == genre) &
                 (df['region'] == region)
             ]
             
-            # Group ratings by decade
+            # grouping ratings by decade
             ratings_by_decade = [
                 group['averageRating'].values 
                 for _, group in subset_df.groupby('decade')
             ]
             
-            # Perform ANOVA if there are at least two decades with data
+            # performing ANOVA if there are at least two decades with data
             if all(len(ratings) > 1 for ratings in ratings_by_decade):
                 f_stat, p_value = f_oneway(*ratings_by_decade)
                 
-                # Store the result
+                # storing the result
                 anova_results.append({
                     'genre': genre,
                     'region': region,
                     'f_stat': f_stat,
                     'p_value': p_value,
-                    'significant': p_value < 0.05  # True if p-value < 0.05
+                    'significant': p_value < 0.05
                 })
             else:
-                # If not enough data for ANOVA, skip this combination
+                # fill with None if lack of data
                 anova_results.append({
                     'genre': genre,
                     'region': region,
@@ -403,10 +402,10 @@ def anova_on_slopes(df, top_genres, regions):
                     'significant': False
                 })
 
-    # Convert results to DataFrame
+    # converting results to DataFrame
     anova_results_df = pd.DataFrame(anova_results)
     
-    # Filter significant results
+    # filtering significant results
     significant_results_df = anova_results_df[anova_results_df['significant']]
     
     return anova_results_df, significant_results_df

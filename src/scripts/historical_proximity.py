@@ -1,7 +1,6 @@
 import sys
 from pathlib import Path
 import pandas as pd
-import numpy as np
 
 # adding the 'src' directory to sys.path so Python can find utils/filling.py
 sys.path.append(str(Path(__file__).resolve().parent.parent))
@@ -2227,6 +2226,6 @@ events = [
 # filling function call
 historical_proximity_score = fill_historical_proximity(country, events, historical_proximity_score)
 
-# Save `historical_proximity` to pickle
+# saving `historical_proximity` to pickle
 output_path = Path("src/scripts/historical_proximity_score.pkl")
 historical_proximity_score.to_pickle(output_path)
