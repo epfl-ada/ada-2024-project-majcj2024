@@ -266,3 +266,147 @@ def analyze_genre_ratings_by_region(df, regions):
         
         # Formatting in a clear way
         print("\n" + "-"*50 + "\n")
+
+def calculate_slopes(df, group_by_columns, sort_by_column, value_column):
+    """
+    calculate_slopes - Calculates the slopes of average ratings between consecutive periods for movies grouped by specified columns.
+
+    Inputs: - df (DataFrame): DataFrame containing the data to analyze
+            - group_by_columns (list): List of column names to group by (e.g., ['region', 'genres'])
+            - sort_by_column (str): Column name to sort by within each group (e.g., 'decade')
+            - value_column (str): Column name whose mean is calculated and used for slope computation (e.g., 'averageRating')
+
+    Outputs: - slopes_df (DataFrame): DataFrame containing the slopes between consecutive periods for each group
+    """
+    slopes_data = []
+
+    # Group by the specified columns
+    for group_keys, group in df.groupby(group_by_columns):
+        group = group.sort_values(sort_by_column)  # Sort by the specified column
+        
+        # Group by the sort column and calculate the mean value
+        group_means = group.groupby(sort_by_column)[value_column].mean().reset_index()
+
+        # Loop through consecutive periods
+        for i in range(1, len(group_means)):
+            period1 = group_means.iloc[i-1]
+            period2 = group_means.iloc[i]
+            
+            # Calculate slope between two consecutive periods
+            slope = (period2[value_column] - period1[value_column]) / (period2[sort_by_column] - period1[sort_by_column])
+            
+            # Store results
+            result = {col: key for col, key in zip(group_by_columns, group_keys)}
+            result.update({
+                f'{sort_by_column}1': period1[sort_by_column],
+                f'{sort_by_column}2': period2[sort_by_column],
+                'slope': slope
+            })
+            slopes_data.append(result)
+
+    # Convert to DataFrame
+    return pd.DataFrame(slopes_data)
+
+def identify_top_worst_genres(slopes_df):
+    """
+    identify_top_worst_genres - Identifies the genres with the steepest and shallowest slope in ratings 
+    for each region and consecutive decade pair.
+
+    Inputs: - slopes_df (DataFrame): DataFrame containing columns 'region', 'decade1', 'decade2', 'genre', and 'slope'
+
+    Outputs: - top_worst_df (DataFrame): DataFrame containing the following columns:
+                - region: The region analyzed
+                - decade1: The start of the consecutive decade pair
+                - decade2: The end of the consecutive decade pair
+                - top_genre: Genre with the steepest positive slope
+                - top_slope: Value of the steepest positive slope
+                - worst_genre: Genre with the most negative slope
+                - worst_slope: Value of the most negative slope
+    """
+    top_worst_data = []
+
+    # Group by region
+    for region, group in slopes_df.groupby('region'):
+        # Group by consecutive decades within the region
+        for decade_pair, decade_group in group.groupby(['decade1', 'decade2']):
+            # Find top and worst genres within the current decade pair
+            top_genre = decade_group.loc[decade_group['slope'].idxmax()]
+            worst_genre = decade_group.loc[decade_group['slope'].idxmin()]
+
+            # Store the results
+            top_worst_data.append({
+                'region': region,
+                'decade1': decade_pair[0],
+                'decade2': decade_pair[1],
+                'top_genre': top_genre['genres'],
+                'top_slope': top_genre['slope'],
+                'worst_genre': worst_genre['genres'],
+                'worst_slope': worst_genre['slope']
+            })
+
+    # Convert to DataFrame
+    return pd.DataFrame(top_worst_data)
+
+def anova_on_slopes(df, top_genres, regions):
+    """
+    anova_on_slopes - Performs ANOVA on the slopes of average ratings between different decades 
+    for specified genre-region combinations.
+
+    Inputs: - df (DataFrame): DataFrame containing columns 'genres', 'region', 'decade', and 'averageRating'
+            - top_genres (list): List of top genres to analyze
+            - regions (list): List of regions to analyze
+
+    Outputs: - anova_results_df (DataFrame): DataFrame containing the following columns:
+                - genre: The genre analyzed
+                - region: The region analyzed
+                - f_stat: F-statistic from ANOVA
+                - p_value: P-value from ANOVA
+                - significant: Boolean indicating whether the result is statistically significant (p-value < 0.05)
+              - significant_results_df (DataFrame): Subset of anova_results_df with significant results
+    """
+    anova_results = []
+
+    # Loop through each genre-region pair
+    for genre in top_genres:
+        for region in regions:
+            # Filter data for the current genre-region combination
+            subset_df = df[
+                (df['genres'] == genre) &
+                (df['region'] == region)
+            ]
+            
+            # Group ratings by decade
+            ratings_by_decade = [
+                group['averageRating'].values 
+                for _, group in subset_df.groupby('decade')
+            ]
+            
+            # Perform ANOVA if there are at least two decades with data
+            if all(len(ratings) > 1 for ratings in ratings_by_decade):
+                f_stat, p_value = f_oneway(*ratings_by_decade)
+                
+                # Store the result
+                anova_results.append({
+                    'genre': genre,
+                    'region': region,
+                    'f_stat': f_stat,
+                    'p_value': p_value,
+                    'significant': p_value < 0.05  # True if p-value < 0.05
+                })
+            else:
+                # If not enough data for ANOVA, skip this combination
+                anova_results.append({
+                    'genre': genre,
+                    'region': region,
+                    'f_stat': None,
+                    'p_value': None,
+                    'significant': False
+                })
+
+    # Convert results to DataFrame
+    anova_results_df = pd.DataFrame(anova_results)
+    
+    # Filter significant results
+    significant_results_df = anova_results_df[anova_results_df['significant']]
+    
+    return anova_results_df, significant_results_df
