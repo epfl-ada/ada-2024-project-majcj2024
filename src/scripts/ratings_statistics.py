@@ -361,9 +361,6 @@ def anova_on_slopes(df, top_genres, regions):
         - results_df (DataFrame): DataFrame containing:
             - genre: The genre analyzed
             - region: The region analyzed
-            - shapiro_results: List of Shapiro-Wilk test p-values for normality
-            - levene_stat: Levene's test statistic for homogeneity of variances
-            - levene_p: Levene's test p-value
             - f_stat: F-statistic from ANOVA
             - anova_p_value: P-value from ANOVA
             - kruskal_stat: Kruskal-Wallis test statistic
