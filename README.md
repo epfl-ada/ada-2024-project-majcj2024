@@ -1,7 +1,7 @@
 # Rating Detectives: Modeling Movie Ratings with Multidimensional Features 🔍
 
 ## Abstract  
-Movies offer more than entertainment as they are reflections of societal trends and cultural shifts. This project investigates the key features influencing movie ratings, focusing on attributes like release date, country of production, and innovative metrics such as historical proximity scores and Shannon Diversity Indices for ethnicity and gender. We demonstrate that ratings vary significantly across regions and genres, supported by ANOVA and Kruskal-Wallis tests, with notable exceptions being that documentaries and romantic comedies fail to disprove ratings across regions in these genres vary to a statistically significant degree. Temporal trends also reveal significant variations in ratings, though release date alone proves insufficient as a predictive feature, leading to the development of enhanced attributes for analysis. Using a Random Forest model that ensembles 100 individual decision trees, our trained model on a 80-20 data split and cross-validated with 10 folds achieves a mean training score of 75.26%, which corresponds to an accuracy of 76.8% on previously unseen data. From our developed model, we identify the importance of features on predicting movie ratings. Release date is identified as the most influential predictor, with a Gini Importance score of 0.2456. This model captures the dynamic evolution of movie ratings and offers a reliable framework for analyzing unlabelled films, providing valuable insights into how genre, region, and time shape audience perceptions.
+Movies offer more than entertainment as they are reflections of societal trends and cultural shifts. This project investigates the key features influencing movie ratings, focusing on attributes like release date, country of production, and innovative metrics such as historical proximity scores and Shannon Diversity Indices for ethnicity and gender.We demonstrate that ratings vary significantly across regions and genres, supported by ANOVA and Kruskal-Wallis tests, though documentaries and romantic comedies stand out as exceptions, failing to show statistically significant regional variations. Temporal trends also reveal significant variations in ratings, though release date alone proves insufficient as a predictive feature, leading to the development of enhanced attributes for analysis. Using a Random Forest model that ensembles 100 individual decision trees, our trained model on a 80-20 data split and cross-validated with 10 folds achieves a mean training score of 75.26%, which corresponds to an accuracy of 76.8% on previously unseen data. From our developed model, we identify the importance of features on predicting movie ratings. Release date is identified as the most influential predictor, with a Gini Importance score of 0.2456. This model captures the dynamic evolution of movie ratings and offers a reliable framework for analyzing unlabelled films, providing valuable insights into how genre, region, and time shape audience perceptions.
 
 [Find our datastory here](https://doalexis.github.io/majcj2024/)
 
@@ -73,8 +73,8 @@ Despite the below divisions, we worked collaboratively throughout the term, meet
 | Week 0     | All                                     |
 | Week 1     | All                                     |
 | Week 2     | Jake and Alexis                         |
-| Week 3     | Mariem, Jacopo, Chiara                  |
-| Week 4     | Jake, Jacopo, Chiara, Mariem            |
+| Week 3     | Meriam, Jacopo, Chiara                  |
+| Week 4     | Jake, Jacopo, Chiara, Meriam            |
 | Week 5     | Alexis for website, rest for datastory  |
 
 ## References 
