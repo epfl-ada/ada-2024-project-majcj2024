@@ -177,3 +177,38 @@ def categorize_decade(release_date):
         return '2000'
     else:
         return None
+    
+def categorize_5_year(release_date):
+    """
+    categorize_5_year - categorizes a movie's release year into a specific 5 year period.
+
+    Inputs: - release_date (int or float): the release year of the movie to be categorized
+
+    Outputs: - (str or None): the 5 year period to which the release year belongs or None if it doesn't fit the specified range
+    """
+    if 1950 <= release_date < 1955:
+        return "1950"
+    elif 1955 <= release_date < 1960:
+        return "1955"
+    elif 1960 <= release_date < 1965:
+        return "1960"
+    elif 1965 <= release_date < 1970:
+        return "1965"
+    elif 1970 <= release_date < 1975:
+        return "1970"
+    elif 1975 <= release_date < 1980:
+        return "1975"
+    elif 1980 <= release_date < 1985:
+        return "1980"
+    elif 1985 <= release_date < 1990:
+        return "1985"
+    elif 1990 <= release_date < 1995:
+        return "1990"
+    elif 1995 <= release_date < 2000:
+        return "1995"
+    elif 2000 <= release_date < 2005:
+        return "2000"
+    elif 2005 <= release_date < 2010:
+        return "2005"
+    else:
+        return None
