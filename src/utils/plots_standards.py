@@ -7,7 +7,7 @@ styles = {
     },
 
     'boxplot_style': {
-        'color': 'cornflowerblue',
+        'color': 'white',
         'linecolor': 'black',
         'width': 0.3
     },
