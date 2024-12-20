@@ -212,3 +212,17 @@ def categorize_5_year(release_date):
         return "2005"
     else:
         return None
+    
+def extract_category(feature_name):
+    """
+    extract_category - extracts adapted cathegories names for model features
+
+    Inputs: - feature_name (string): raw name of the considered feature
+
+    Outputs: - feature_name (string): cleaned name of the considered feature
+    """
+    if "SDI" in feature_name:
+        return feature_name
+    elif "_" in feature_name:
+        return feature_name.split("_")[0]
+    return feature_name
