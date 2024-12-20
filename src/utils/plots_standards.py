@@ -1,4 +1,4 @@
-# Dictionary to store all styles
+# dictionary to store all styles
 styles = {
     'hist_style': {
         'edgecolor': 'black',

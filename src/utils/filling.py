@@ -25,36 +25,15 @@ def fill_iqr(df, col, t=1.5):
 
     # putting fixed rows into the original dataframe
     return pd.concat([df, outliers], ignore_index=True)
-
-def fill_col1(row, col1, col2, col3, unmatched):
-    """
-    fill_col1 - applied to a dataframe column, fills it 
-    based on the presence of the considered feature in the unmatched variable and 
-    on the values of col2, col3.
-
-    Inputs: - row (series): dataframe row
-            - col1 (string): column that needs to be filled
-            - col2, col3 (string): columns on which filling is based if col1 is not unmatched
-            - unmatched (list): list of unmatched strings to compare with col1
-
-    Outputs:
-    """
-    if row[col1] in unmatched:
-        # skip filling by keeping row[col1] as it is
-        return row[col1]
-    else:
-        # retrieve either col2 or col3 if the first is nan
-        return row[col1] if pd.notna(row[col1]) else (
-            row[col2] if pd.notna(row[col2]) else row[col3])
     
 def fill_ethnicity(row, unmatched_ethnicities):
     """
     fill_ethnicity - Resolves and fills ambiguous or missing ethnicity labels in a dataset.
 
     Inputs: - row (Series): A Pandas Series representing a single row of a DataFrame, 
-              containing 'ethnicity_label', 'nationalityLabel', and other relevant fields.
+              containing 'ethnicity_label', 'nationalityLabel', and other relevant fields
             - unmatched_ethnicities (set): A set of ethnicity labels considered ambiguous 
-              or unmatched, requiring resolution via the nationality label.
+              or unmatched, requiring resolution via the nationality label
 
     Outputs: - filled_value (string): A resolved value for the ethnicity label, 
                 prioritized as follows:
@@ -63,11 +42,11 @@ def fill_ethnicity(row, unmatched_ethnicities):
                 3. Falls back to 'ethnicity_label' if other fields are missing.
     """
     if row['ethnicity_label'] in unmatched_ethnicities:
-        # If the ethnicity is ambiguous, retrieve the nationality
+        # retrieving the nationality if the ethnicity is ambiguous
         return row['nationalityLabel'] if pd.notna(row['nationalityLabel']) else (
             row['ethnicityLabel'] if pd.notna(row['ethnicityLabel']) else row['ethnicity_label'])
     else:
-        # For non-ambiguous cases, retrieve the ethnicity label associated to it or fallback to nationality
+        # retrieving the ethnicity label associated to it or fallback to nationality
         return row['ethnicity_label'] if pd.notna(row['ethnicity_label']) else (
             row['ethnicityLabel'] if pd.notna(row['ethnicityLabel']) else row['nationalityLabel'])
 
@@ -104,19 +83,19 @@ def fill_missing_regions(df, top_genres, regions):
 
     Outputs: - df (DataFrame): the updated dataframe with missing region entries filled
     """
-    # Loop through each genre to check and fill missing region entries
+    # looping through each genre to check and fill missing region entries
     for genre in top_genres:
-        # Identify unique regions for the current genre
+        # identifying unique regions for the current genre
         regions_with_genre = df[df["genres"] == genre]["region"].unique()
 
-        # Convert unique regions to a list
+        # converting unique regions to a list
         regions_with_genre = regions_with_genre.tolist()
 
-        # Check if the number of regions for the current genre is less than the total number of regions
+        # checking if the number of regions for the current genre is less than the total number of regions
         if len(regions_with_genre) < 9:
             for region in regions:
                 if region not in regions_with_genre:
-                    # Create a new row for the missing region and set averageRating as 0.0
+                    # creating a new row for the missing region and setting averageRating as 0.0
                     new_row = {"region": region, "genres": genre, "averageRating": 0.0}
                     df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 
@@ -133,23 +112,23 @@ def fill_missing_decades(df, top_genres, regions, decades):
 
     Outputs: - df (DataFrame): the updated dataframe with missing decade entries filled
     """
-    # Loop through each genre to check and fill missing decade entries per region
+    # looping through each genre to check and fill missing decade entries per region
     for genre in top_genres:
         genre_df = df[df["genres"] == genre]
 
-        # Loop over each region
+        # looping over each region
         for region in regions:
-            # Get unique decades for the current region and genre
+            # getting unique decades for the current region and genre
             regions_with_genre_decade = genre_df[genre_df["region"] == region]["decade"].unique()
 
-            # Convert unique decades to a list
+            # converting unique decades to a list
             regions_with_genre_decade = regions_with_genre_decade.tolist()
 
-            # Check for missing decades and fill them
+            # checking for missing decades and fill them
             if len(regions_with_genre_decade) < len(decades):
                 for dec in decades:
                     if dec not in regions_with_genre_decade:
-                        # Create a new row with missing decade and fill with averageRating as 0.0
+                        # creating a new row with missing decade and filling with averageRating as 0.0
                         new_row = {"region": region, "genres": genre, "averageRating": 0.0, "decade": dec}
                         df = pd.concat([df, pd.DataFrame([new_row])], ignore_index=True)
 

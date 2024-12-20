@@ -2,8 +2,6 @@ import json
 import pandas as pd
 import re
 
-# the following cleaning functions do NOT change the size of the dataframes they are applied to
-
 def clean_idxs(pattern):
     """
     clean_idxs - cleans patterns such as {"/m/06ppq": "Silent film", "/m/02h40lc": "English Language"}
@@ -137,14 +135,14 @@ def evaluate_genre_counts(df, col, max_range):
     Outputs: - percentages (dict): a dictionary with ranges as keys and percentages as values
              - subsets (dict): a dictionary with ranges as keys and dataframes as values
     """
-    # Initialize dictionaries to store results
+    # initializing dictionaries to store results
     percentages = {}
     subsets = {}
 
-    # Calculate the count of genres
+    # calculating the count of genres
     df['genre_count'] = df[col].str.len()
 
-    # Loop through the range to calculate percentages and filter subsets
+    # looping through the range to calculate percentages and filter subsets
     for i in range(1, max_range + 1):
         condition = df['genre_count'] <= i
         subset = df[condition]
@@ -161,7 +159,7 @@ def categorize_decade(release_date):
 
     Inputs: - release_date (int or float): the release year of the movie to be categorized
 
-    Outputs: - (str or None): the decade to which the release year belongs (e.g., '1950', '1960', etc.), or None if it doesn't fit the specified range
+    Outputs: - (str or None): the decade to which the release year belongs, or None if it doesn't fit the specified range
     """
     if 1950 <= release_date < 1960:
         return '1950'
