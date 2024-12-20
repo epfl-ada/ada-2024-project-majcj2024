@@ -1,16 +1,7 @@
-# History’s Plot Twist: Cinematic genre, diversity, and popularity as the ultimate mirror 🪞
+# Rating Detectives: Modeling Movie Ratings with Multidimensional Features 🔍
 
 ## Abstract  
-In the world of cinema, movies often do more than entertain—they capture and reflect the 
-societal pulse of their time. This project seeks to understand how genre complexity and cast 
-diversity in films can serve as mirrors of global events and cultural shifts through ratings. By 
-analyzing data from CMU, IMDb, and Wikidata sources, we examine how diverse 
-demographic representations and complex genre combinations influence ratings and reveal 
-trends that resonate with audiences across different eras and regions. This research is 
-motivated by the want to fulfill our beliefs that region and time impact population’s 
-perceptions of the media they consume. By viewing films through this lens, filmmakers, 
-critics, and enthusiasts alike can better understand cinema’s role as both a reflection and an 
-influencer of the world’s shifting social and cultural landscape.
+Movies are more than entertainment—they are reflections of societal trends and cultural shifts. This project investigates the key features influencing movie ratings, focusing on attributes like release date, country of production, and innovative metrics such as historical proximity scores and Shannon Diversity Indices for ethnicity and gender. We demonstrate that ratings vary significantly across regions and genres, supported by ANOVA and Kruskal-Wallis tests, with notable exceptions like documentaries and romantic comedies. Temporal trends also reveal significant variations in ratings, though release date alone proves insufficient as a predictive feature, leading to the development of enhanced attributes for analysis. Using a Random Forest model, trained on an 80-20 data split and cross-validated with 10 folds, our approach achieves a mean accuracy of 75.26% in predicting movie ratings. Feature importance analysis highlights release date as the most influential predictor, with a Gini Importance score of 0.2456. This model captures the dynamic evolution of movie ratings and offers a reliable framework for analyzing unlabelled films, providing valuable insights into how genre, region, and time shape audience perceptions.
 
 ## Research Questions:  
 - How do film ratings vary across regions and genres, and how has this evolved over 
