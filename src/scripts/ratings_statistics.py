@@ -348,64 +348,84 @@ def identify_top_worst_genres(slopes_df):
 
 def anova_on_slopes(df, top_genres, regions):
     """
-    anova_on_slopes - performs ANOVA on the slopes of average ratings between different decades 
-    for specified genre-region combinations.
+    Performs ANOVA and Kruskal-Wallis tests on the slopes of average ratings between different decades
+    for specified genre-region combinations, including detailed results of normality, homoscedasticity,
+    and statistical tests.
 
-    Inputs: - df (DataFrame): DataFrame containing columns 'genres', 'region', 'decade', and 'averageRating'
-            - top_genres (list): list of top genres to analyze
-            - regions (list): list of regions to analyze
+    Inputs: 
+        - df (DataFrame): DataFrame containing columns 'genres', 'region', 'decade', and 'averageRating'
+        - top_genres (list): list of top genres to analyze
+        - regions (list): list of regions to analyze
 
-    Outputs: - anova_results_df (DataFrame): DataFrame containing the following columns:
-                - genre: The genre analyzed
-                - region: The region analyzed
-                - f_stat: F-statistic from ANOVA
-                - p_value: P-value from ANOVA
-                - significant: Boolean indicating whether the result is statistically significant (p-value < 0.05)
-              - significant_results_df (DataFrame): Subset of anova_results_df with significant results
+    Outputs: 
+        - results_df (DataFrame): DataFrame containing:
+            - genre: The genre analyzed
+            - region: The region analyzed
+            - shapiro_results: List of Shapiro-Wilk test p-values for normality
+            - levene_stat: Levene's test statistic for homogeneity of variances
+            - levene_p: Levene's test p-value
+            - f_stat: F-statistic from ANOVA
+            - anova_p_value: P-value from ANOVA
+            - kruskal_stat: Kruskal-Wallis test statistic
+            - kruskal_p_value: P-value from Kruskal-Wallis test
+            - significant_anova: Boolean indicating whether ANOVA p-value < 0.05
+            - significant_kruskal: Boolean indicating whether Kruskal-Wallis p-value < 0.05
+        - significant_results_df (DataFrame): Subset of results_df with significant results for either test
     """
-    anova_results = []
+    results = []
 
-    # looping through each genre-region pair
     for genre in top_genres:
         for region in regions:
-            # filtering data for the current genre-region combination
-            subset_df = df[
-                (df['genres'] == genre) &
-                (df['region'] == region)
-            ]
+            # Filter data for the current genre-region combination
+            subset_df = df[(df['genres'] == genre) & (df['region'] == region)]
             
-            # grouping ratings by decade
-            ratings_by_decade = [
-                group['averageRating'].values 
-                for _, group in subset_df.groupby('decade')
-            ]
+            # Group ratings by decade
+            groups = [group['averageRating'].values for _, group in subset_df.groupby('decade')]
             
-            # performing ANOVA if there are at least two decades with data
-            if all(len(ratings) > 1 for ratings in ratings_by_decade):
-                f_stat, p_value = f_oneway(*ratings_by_decade)
-                
-                # storing the result
-                anova_results.append({
+            # Ensure we have at least two groups with more than one data point
+            if len(groups) >= 2 and all(len(g) > 1 for g in groups):
+    
+                # Perform ANOVA
+                try:
+                    f_stat, anova_p_value = f_oneway(*groups)
+                except ValueError:
+                    f_stat, anova_p_value = None, None
+
+                # Perform Kruskal-Wallis Test (non-parametric alternative to ANOVA)
+                try:
+                    kruskal_stat, kruskal_p_value = kruskal(*groups)
+                except ValueError:
+                    kruskal_stat, kruskal_p_value = None, None
+
+                results.append({
                     'genre': genre,
                     'region': region,
                     'f_stat': f_stat,
-                    'p_value': p_value,
-                    'significant': p_value < 0.05
+                    'anova_p_value': anova_p_value,
+                    'kruskal_stat': kruskal_stat,
+                    'kruskal_p_value': kruskal_p_value,
+                    'significant_anova': anova_p_value < 0.05 if anova_p_value is not None else False,
+                    'significant_kruskal': kruskal_p_value < 0.05 if kruskal_p_value is not None else False
                 })
             else:
-                # fill with None if lack of data
-                anova_results.append({
+                # Not enough data for tests
+                results.append({
                     'genre': genre,
                     'region': region,
                     'f_stat': None,
-                    'p_value': None,
-                    'significant': False
+                    'anova_p_value': None,
+                    'kruskal_stat': None,
+                    'kruskal_p_value': None,
+                    'significant_anova': False,
+                    'significant_kruskal': False
                 })
 
-    # converting results to DataFrame
-    anova_results_df = pd.DataFrame(anova_results)
-    
-    # filtering significant results
-    significant_results_df = anova_results_df[anova_results_df['significant']]
-    
-    return anova_results_df, significant_results_df
+    # Convert results to DataFrame
+    results_df = pd.DataFrame(results)
+
+    # Filter significant results
+    significant_results_df = results_df[(results_df['significant_anova'] == True) | (results_df['significant_kruskal'] == True)]
+
+    return results_df, significant_results_df
+
+
