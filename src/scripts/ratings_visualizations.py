@@ -265,7 +265,7 @@ def fit_autoarima_models(overall_means, figsize=(15, 15)):
     error_metrics = {}
 
     # Initialize the subplot grid
-    fig, axes = plt.subplots(3, 3, figsize=figsize)
+    fig, axes = plt.subplots(3, 3, figsize=figsize, sharey=True)
     axes = axes.flatten()
 
     # AutoARIMA and Plot for each region
