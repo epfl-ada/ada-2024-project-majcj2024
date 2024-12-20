@@ -1,7 +1,7 @@
 # Rating Detectives: Modeling Movie Ratings with Multidimensional Features 🔍
 
 ## Abstract  
-Movies offer more than entertainment as they are reflections of societal trends and cultural shifts. This project investigates the key features influencing movie ratings, focusing on attributes like release date, country of production, and innovative metrics such as historical proximity scores and Shannon Diversity Indices for ethnicity and gender. We demonstrate that ratings vary significantly across regions and genres, supported by ANOVA and Kruskal-Wallis tests, with notable exceptions like documentaries and romantic comedies. Temporal trends also reveal significant variations in ratings, though release date alone proves insufficient as a predictive feature, leading to the development of enhanced attributes for analysis. Using a Random Forest model that ensembles 100 individual decision trees, trained on an 80-20 data split and cross-validated with 10 folds, our approach achieves a mean accuracy of 75.26% in predicting movie ratings. Feature importance analysis highlights release date as the most influential predictor, with a Gini Importance score of 0.2456. This model captures the dynamic evolution of movie ratings and offers a reliable framework for analyzing unlabelled films, providing valuable insights into how genre, region, and time shape audience perceptions.
+Movies offer more than entertainment as they are reflections of societal trends and cultural shifts. This project investigates the key features influencing movie ratings, focusing on attributes like release date, country of production, and innovative metrics such as historical proximity scores and Shannon Diversity Indices for ethnicity and gender. We demonstrate that ratings vary significantly across regions and genres, supported by ANOVA and Kruskal-Wallis tests, with notable exceptions being that documentaries and romantic comedies fail to disprove ratings across regions in these genres vary to a statistically significant degree. Temporal trends also reveal significant variations in ratings, though release date alone proves insufficient as a predictive feature, leading to the development of enhanced attributes for analysis. Using a Random Forest model that ensembles 100 individual decision trees, trained on an 80-20 data split and cross-validated with 10 folds, our approach achieves a mean accuracy of 75.26% in predicting movie ratings. Feature importance analysis highlights release date as the most influential predictor, with a Gini Importance score of 0.2456. This model captures the dynamic evolution of movie ratings and offers a reliable framework for analyzing unlabelled films, providing valuable insights into how genre, region, and time shape audience perceptions.
 
 ## Research Questions:  
 - How do film ratings vary across regions and genres, and how has this evolved over time?
@@ -20,17 +20,15 @@ Three additional datasets were used for constructing our datastory.
 
 ## Methods 
 ### Part 1: Data enrichment and cleaning 
-**Step 1 - Enriching metadata**: Duplicate movie entries were retained only if they contained unique 
-country attributes, ensuring data completeness. Missing attribute values in the CMU Corpus were filled 
-using the TMDB’s entries, and movies without genres (about 1%) were dropped. The characters 
-dataframe was also enriched using the Wikidata dataset to add more ethnicity information
+**Step 1 - Loading and cleaning movie metadata**: Movie metadata was loaded from the CMU Corpus and stripped of duplicate movie entries were dropped, retaining only unique titles, which accounted for about 5% of the data. Movies with missing release dates were excluded, and date formats were standardized to facilitate merging.
 
-**Step 2 - Handling several countries and genres**: Movies with multiple countries or genres were 
-exploded into separate entries. To handle rare genres in exploded movies, we selected to keep only 
-duplicate entries with genres amongst the top 90% of all genres.  
+**Step 2 - Enriching movies and characters datasets**: Ratings data from IMDb were linked to the TMDB dataset using IMDb IDs. The TMDB dataset, which had duplicates based on IMDb IDs, was deduplicated and merged with the movies dataset using a  unique index of  movie titles and release dates. The characters dataframe was also enriched using the Wikidata dataset to add more ethnicity information.
 
-**Step 3 - Merging ratings**: MovieLens ratings were averaged per IMDB ID and linked to the CMU 
-corpus using a provided linker file. Our final movies dataset includes 23,432 movies with ratings. 
+**Step 3 - Handling genres and countries**: Movies with multiple countries were removed from the enriched dataset to ensure independency of ratings across geographies. Movies with multiple genres were exploded into separate entries to retrieve the top 20 singular genres for analysis. We then focussed all future analysis on major these 20 major genres.
+
+**Step 4 - Character dataset enrichment**: The characters dataset was cleaned and enriched with additional attributes such as ethnicity, gender, and age. Missing values were handled using custom functions, ensuring data completeness. Actor demographic information was standardized and merged with other datasets for consistent analysis.
+
+
 
 ### Part 2: Distribution analysis 
 **Step 4 - Understanding attribute distributions**: Quantitative movie metadata features (ie. runtime, 
