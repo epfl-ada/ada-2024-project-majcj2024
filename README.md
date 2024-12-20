@@ -95,10 +95,10 @@ The final directory structure of the project is the following:
 ├── data                        <- Project data files
 │
 ├── src                         <- Source code
-│   ├── data                            <- Data directory
-│   ├── models                          <- Model directory
-│   ├── utils                           <- Utility directory
-│   ├── scripts                         <- Shell scripts
+│   ├── data                            <- stores temporal data files and clusters
+│   ├── models                          <- stores utils for the classifier
+│   ├── scripts                         <- stores scripts for analysis on features
+│   ├── utils                           <- stores utility modules (e.g. cleaning.py) 
 │    
 ├── results.ipynb               
 │
