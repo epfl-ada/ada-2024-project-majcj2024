@@ -1,3 +1,5 @@
+# script to define world regions and mapping dictionaries to then be imported in rsults.ipynb
+
 na = [
     'United States of America', 'Canada'
 ]
@@ -60,15 +62,6 @@ regions = {
     'North Africa and Middle East': north_africa_and_middle_east,
     'India': india,
     'Remaining Asia': remaining_asia,
-    'Oceania': oceania
-}
-
-continents = {
-    'North America': na,
-    'South America': sa_and_ca,
-    'Europe': western_europe + eastern_europe,
-    'Africa': south_africa_and_central_africa + north_africa_and_middle_east,
-    'Asia': india + remaining_asia,
     'Oceania': oceania
 }
 
