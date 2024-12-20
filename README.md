@@ -1,38 +1,22 @@
 # Rating Detectives: Modeling Movie Ratings with Multidimensional Features 🔍
 
 ## Abstract  
-Movies are more than entertainment—they are reflections of societal trends and cultural shifts. This project investigates the key features influencing movie ratings, focusing on attributes like release date, country of production, and innovative metrics such as historical proximity scores and Shannon Diversity Indices for ethnicity and gender. We demonstrate that ratings vary significantly across regions and genres, supported by ANOVA and Kruskal-Wallis tests, with notable exceptions like documentaries and romantic comedies. Temporal trends also reveal significant variations in ratings, though release date alone proves insufficient as a predictive feature, leading to the development of enhanced attributes for analysis. Using a Random Forest model, trained on an 80-20 data split and cross-validated with 10 folds, our approach achieves a mean accuracy of 75.26% in predicting movie ratings. Feature importance analysis highlights release date as the most influential predictor, with a Gini Importance score of 0.2456. This model captures the dynamic evolution of movie ratings and offers a reliable framework for analyzing unlabelled films, providing valuable insights into how genre, region, and time shape audience perceptions.
+Movies offer more than entertainment as they are reflections of societal trends and cultural shifts. This project investigates the key features influencing movie ratings, focusing on attributes like release date, country of production, and innovative metrics such as historical proximity scores and Shannon Diversity Indices for ethnicity and gender. We demonstrate that ratings vary significantly across regions and genres, supported by ANOVA and Kruskal-Wallis tests, with notable exceptions like documentaries and romantic comedies. Temporal trends also reveal significant variations in ratings, though release date alone proves insufficient as a predictive feature, leading to the development of enhanced attributes for analysis. Using a Random Forest model that ensembles 100 individual decision trees, trained on an 80-20 data split and cross-validated with 10 folds, our approach achieves a mean accuracy of 75.26% in predicting movie ratings. Feature importance analysis highlights release date as the most influential predictor, with a Gini Importance score of 0.2456. This model captures the dynamic evolution of movie ratings and offers a reliable framework for analyzing unlabelled films, providing valuable insights into how genre, region, and time shape audience perceptions.
 
 ## Research Questions:  
-- How do film ratings vary across regions and genres, and how has this evolved over 
-time? 
-- What is the influence of cast demographics – ethnicity and gender – on ratings, and do 
-these effects differ by region? 
-- How have traditional genres blended into complex combinations, and how do regional 
-preferences respond to these trends? 
-- Can we identify time periods of historical or cultural events that coincide with 
-significant rating shifts in movies, and for what cast demographics and cinematic 
-subjects? 
-- Can we predict which genre and demographic combinations will likely achieve the 
-highest ratings in each region?  
-- Which regions show the most consistent preferences in terms of genre and actor 
-demographics? 
+- How do film ratings vary across regions and genres, and how has this evolved over time?
+- What is the influence of cast demographics – ethnicity and gender – on ratings, and do these effects differ by region? 
+- How have traditional genres blended into complex combinations of genres assigned to movies?
+- Can we identify time periods of historical or cultural events that coincide with significant rating shifts in movies?
+- What novel features from characters metadata can be prepared to indicate movie diversity to contribute to movie rating predictions? 
+- How accurate can we prepare a classification model to label the ratings of unlabelled movies?
+- What feature is the most informative in assigning a rating out of 10, incremented by 0.5 to a movie that's rating is unknown?
 
-## Proposed additional datasets: 
-Two additional datasets are to be used for constructing our datastory.  
-1. Full TMDB Movies Dataset 2024 (1M Movies) [1]: This dataset includes metadata 
-(e.g. revenue, runtime, release date, and IMDB ID) to complement the CMU dataset. 
-This “.csv” downloadable dataset contains about 1.4M movie’s metadata, yet only 
-100K entries remain upon merging to the CMU Corpus, which has not been too heavy 
-so far. 
-2. MovieLens 25M Movie Ratings [2]: This dataset from the University of Minnesota 
-includes 25M movie ratings from MovieLens users chosen at random. Movie ratings 
-include their IMDB IDs, allowing us to merge the ratings to the previously enriched 
-CMU-TMDB dataset. Numerous ratings exist per movie, so the average rating per 
-movie was calculated. 
-3. Wikidata Dataset [3]: Supplementary dataset manually generated from Wikidata 
-containing the freebase IDs, nationalities and missing ethnicities of the actors in our 
-original database.
+## Employed additional datasets: 
+Three additional datasets were used for constructing our datastory.  
+1. Full TMDB Movies Dataset 2024 (1M Movies) [1]: This dataset includes metadata (e.g. revenue, runtime, release date, and IMDB ID) to complement the CMU dataset. This “.csv” downloadable dataset contains about 1.4M movie’s metadata, yet only 100K entries remain upon merging to the CMU Corpus.
+2. IMDb Non-Commercial Datasets [2]: This ".tsv" dataset from IMDb contains movie average ratings on a scale of 10. Each movies rating is an average value calculated by IMDb in an undisclosed way, as an effort to prevent user bias when rating movies if the average rating equation were known publicly.
+3. Wikidata Dataset [3]: A supplementary, manually generated dataset from Wikidata containing the freebase IDs, nationalities and missing ethnicities of the actors in our original movie Corpus.
 
 ## Methods 
 ### Part 1: Data enrichment and cleaning 
@@ -95,10 +79,10 @@ most predictable.
 
 ### Part 6: Formatting the final datastory and expanding modular file organization 
 
-## Proposed timeline:
+## Executed timeline:
 | **Week** | **Tasks**                                                                         |
 |----------|-----------------------------------------------------------------------------------|
-| Week 1   | Review steps 1-5 + Homework 2                                                    |
+| Week 1   | Reviewed P2 + Homework 2                                                         |
 | Week 2   | Repeat steps 5-7 across genres, region, and/or time periods                      |
 | Week 3   | Step 8 + 9                                                                       |
 | Week 4   | Step 10 + 11                                                                     |
@@ -106,8 +90,7 @@ most predictable.
 
 
 ## Organization within the team:  
-Despite the below divisions, we work collaboratively and continuously to ensure we remain up 
-to date on the project happenings and to ensure no one's thinking becomes too pigeonholed. 
+Despite the below divisions, we worked collaboratively throughout the term, meeting on a weekly basis over all 14-weeks, as to continuously ensure we remain up to date on the project happenings and to ensure no one's thinking becomes too pigeonholed. 
 | **Week**   | **Participants**                        |
 |------------|-----------------------------------------|
 | Week 1     | All                                     |
@@ -116,20 +99,17 @@ to date on the project happenings and to ensure no one's thinking becomes too pi
 | Week 4     | Jake, Jacopo, Chiara, Mariem            |
 | Week 5     | All                                     |
 
-## Questions for TAs:  
-We’ll be in contact with Ziyi. 
-
 ## References 
 [1] Asaniczka, and themoviedb.org. (2024). Full TMDB Movies Dataset 2024 (1M Movies)  
 [Data set]. Kaggle. https://doi.org/10.34740/KAGGLE/DSV/9904037 
 
-[2] Movielens. (2019). MovieLens 25M Dataset [Data set]. Grouplens.  
-https://files.grouplens.org/datasets/movielens/ml-25m-README.html  
+[2] IMDb. (2024). IMDb Non-Commercial Datasets [Data set]. IMDb.  
+https://developer.imdb.com/non-commercial-datasets/
 
 [3] https://query.wikidata.org/ 
 
 ## Project Structure
-The current directory structure of the project iss the following:
+The final directory structure of the project is the following:
 
 ```
 ├── data                        <- Project data files
